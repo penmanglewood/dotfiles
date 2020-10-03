@@ -1,0 +1,17 @@
+[init]
+  defaultBranch = main
+[push]
+  default = current
+[color]
+  ui = auto
+[url "ssh://git@github.com/penmanglewood"]
+  insteadOf = https://github.com/penmanglewood
+[url "ssh://git@github.com/zalora"]
+  insteadOf = https://github.com/zalora
+[alias]
+  st = status
+  co = checkout
+  lol = log --pretty=oneline --graph --abbrev-commit
+  lola = log --pretty=oneline --graph --abbrev-commit --all
+[fetch]
+  prune = true

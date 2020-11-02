@@ -8,6 +8,16 @@
 set -e
 set -o pipefail
 
+function setup_bash() {
+  if [ -f $HOME/.bash_profile ]
+  then
+    return
+  fi
+
+  cp shell/bash_profile $HOME/.bash_profile
+  source $HOME/.bash_profile
+}
+
 if [ `whoami` = "root" ]
 then
 	echo "Run this script as a non-root user."
@@ -26,6 +36,15 @@ case `uname` in
 		echo "architecture not supported: $(uname)"
 		exit 1
 		;;
+esac
+
+case "$SHELL" in
+  /bin/bash)
+    setup_bash
+    ;;
+  *)
+    echo "shell $SHELL isn't supported yet"
+    ;;
 esac
 
 # Configure neovim
@@ -67,20 +86,5 @@ else
   echo "- git name already set"
 fi
 
-function setup_bash() {
-  if [ -f $HOME/.bash_profile ]
-  then
-    return
-  fi
-
-  cp shell/bash_profile $HOME/.bash_profile
-}
-
-case "$SHELL" in
-  /bin/bash)
-    setup_bash
-    ;;
-  *)
-    echo "shell $SHELL isn't supported yet"
-    ;;
-esac
+echo
+echo "dotfiles installed."

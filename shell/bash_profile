@@ -30,4 +30,4 @@ alias l='ls -l'
 alias gst='git status'
 alias vim=nvim
 
-export PATH=$(go env GOBIN):$PATH
+export PATH=/usr/local/go/bin:$PATH

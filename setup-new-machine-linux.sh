@@ -76,15 +76,19 @@ function setup_with_dpkg() {
 		echo "- vim-plug already installed. upgrade with: nvim +PlugUpgrade +qa"
 	fi
 
+	set +e
   go version > /dev/null 2>&1
   if [ $? -ne 0 ]
   then
     go_tar="https://golang.org/dl/go1.15.3.linux-amd64.tar.gz"
-    sudo curl -fLo /usr/local/go --create-dirs $go_tar
-    sudo tar -C /usr/local -xzf go1.15.3.linux-amd64.tar.gz
+    sudo curl -fLo /usr/local/go1.15.3.linux-amd64.tar.gz --create-dirs $go_tar
+    pushd /usr/local
+    sudo tar -xzf go1.15.3.linux-amd64.tar.gz
+    popd
 	else
     echo "- go already installed ($(go version))"
 	fi
+	set -e
 }
 
 if command -v pacman > /dev/null 2>&1

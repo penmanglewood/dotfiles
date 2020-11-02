@@ -1,0 +1,33 @@
+# If not running interactively, don't do anything.
+case $- in
+  *i*) ;;
+    *) return ;;
+esac
+
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
+# don't put duplicate lines or lines starting with space in the history.
+# bash(1) has more options.
+HISTCONTROL=ignoreboth
+
+# append to the history file, don't overwrite it.
+shopt -s histappend
+
+HISTSIZE=100000
+HISTFILESIZE=4000
+
+shopt -s checkwinsize
+
+# set a fancy prompt (non-color, unless we know we want color)
+case "$TERM" in
+  xterm-color|*-256color)
+    color_prompt=yes
+    ;;
+esac
+
+alias l='ls -l'
+alias gst='git status'
+alias vim=nvim
+
+export PATH=$(go env GOBIN):$PATH

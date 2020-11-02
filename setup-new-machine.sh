@@ -67,5 +67,20 @@ else
   echo "- git name already set"
 fi
 
-# TODO setup zshrc or bash_profile. Add export PATH=$(go env GOBIN):$PATH.
-# at the very least.
+function setup_bash() {
+  if [ -f $HOME/.bash_profile ]
+  then
+    return
+  fi
+
+  cp shell/bash_profile $HOME/.bash_profile
+}
+
+case "$SHELL" in
+  /bin/bash)
+    setup_bash
+    ;;
+  *)
+    echo "shell $SHELL isn't supported yet"
+    ;;
+esac

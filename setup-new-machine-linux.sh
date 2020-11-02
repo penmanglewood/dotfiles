@@ -58,9 +58,41 @@ function setup_with_pacman() {
 	fi
 }
 
+function setup_with_dpkg() {
+	sudo apt-get update
+  sudo apt-get upgrade
+
+  sudo apt-get install curl
+  sudo apt-get install neovim
+
+	# As per instructions on https://github.com/junegunn/vim-plug
+	vimplug_loc="${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim
+	if [ ! -f $vimplug_loc ]
+	then
+		curl -fLo $vimplug_loc \
+			--create-dirs \
+			https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	else
+		echo "- vim-plug already installed. upgrade with: nvim +PlugUpgrade +qa"
+	fi
+
+  go version > /dev/null 2>&1
+  if [ $? -ne 0 ]
+  then
+    go_tar="https://golang.org/dl/go1.15.3.linux-amd64.tar.gz"
+    sudo curl -fLo /usr/local/go --create-dirs $go_tar
+    sudo tar -C /usr/local -xzf go1.15.3.linux-amd64.tar.gz
+	else
+    echo "- go already installed ($(go version))"
+	fi
+}
+
 if command -v pacman > /dev/null 2>&1
 then
 	setup_with_pacman
+elif command -v dpkg > /dev/null 2>&1
+then
+  setup_with_dpkg
 else
 	echo "your package manager is not supported yet"
 fi

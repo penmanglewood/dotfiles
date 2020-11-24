@@ -6,6 +6,7 @@ This installs and configures my most commonly used software on my most commonly
 used architectures.
 
 architecture
+- debian-based distros
 - arch linux
 
 software
